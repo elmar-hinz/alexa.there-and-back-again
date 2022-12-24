@@ -1,7 +1,5 @@
 /* *
- * This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
- * Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
- * session persistence, api calls, and more.
+ * There and Back Again
  * */
 const Alexa = require('ask-sdk-core');
 
@@ -10,7 +8,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
+        const speakOutput = 'Hello, you can say Hello or Help. Which would you like to try?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -25,7 +23,7 @@ const HelloWorldIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Hello World!';
+        const speakOutput = 'Hello Arda!';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -56,7 +54,7 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Goodbye!';
+        const speakOutput = 'So long!!';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
