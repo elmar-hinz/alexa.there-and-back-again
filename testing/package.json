@@ -1,0 +1,16 @@
+{
+  "name": "specs-there-and-back-again",
+  "scripts": {
+    "test": "mocha --parallel 'specs/**/*.spec.js'"
+  },
+  "author": "Elmar Hinz",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^9.2.2",
+    "node-fetch": "^2.6.7",
+    "virtual-alexa": "^0.7.8"
+  }
+}
