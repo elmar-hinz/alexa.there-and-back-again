@@ -1,4 +1,4 @@
-const root = '../../../..';
+const root = '../../..';
 const MessageQueue = require(`${ root }/lambda/lib/MessageQueue.js`);
 
 const chai = require('chai');
