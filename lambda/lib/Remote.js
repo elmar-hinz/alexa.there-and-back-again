@@ -2,17 +2,14 @@ const fetch = require('node-fetch');
 
 class Remote {
 
-    messagesUrl;
+    stateUrl;
+    bearerToken;
 
-    loadMessages() {
-        return fetch(this.messagesUrl, {})
+    loadState() {
+        return fetch(this.stateUrl, {})
             .then(res => res.json())
-            .then((json => { return json.messages; }))
+            .then((json => { return JSON.parse(json.state); }))
             .catch((err) => { console.log('Err: ', err.message); });
-    }
-
-    deleteMessage() {
-
     }
 
 }

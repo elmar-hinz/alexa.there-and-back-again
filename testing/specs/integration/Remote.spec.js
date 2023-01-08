@@ -8,12 +8,12 @@ chai.use(chaiAsPromised);
 
 const nock = require('nock');
 const url = 'https://example.org';
-const pathToMessages = '/api/taba/msgs/'
-const messagesUrl = `${ url }${ pathToMessages }`;
-const alpha = { id: 'alpha' };
-const beta = { id: 'beta' };
-const gamma = { id: 'gamma' };
-const messages = [alpha, beta, gamma];
+const pathToState = '/api/states/input_text.there_and_back_again'
+const stateUrl = `${ url }${ pathToState }`;
+const text = 'hello world';
+const message = { text: text };
+const stringified = JSON.stringify(message);
+const json = { state: stringified };
 
 describe('the Remote class', function () {
     let remote;
@@ -24,9 +24,9 @@ describe('the Remote class', function () {
 
     describe('the loadMessages function', function() {
         it('should load the messages', function() {
-            nock(url).get(pathToMessages).reply(200, { messages });
-            remote.messagesUrl = messagesUrl;
-            return remote.loadMessages().should.eventually.deep.equal(messages);
+            nock(url).get(pathToState).reply(200, json );
+            remote.stateUrl = stateUrl;
+            return remote.loadState().should.eventually.deep.equal(message);
         });
     });
 
