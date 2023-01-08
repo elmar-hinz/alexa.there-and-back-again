@@ -3,10 +3,14 @@ const fetch = require('node-fetch');
 class Remote {
 
     stateUrl;
-    bearerToken;
+    bearerToken = '';
 
     loadState() {
-        return fetch(this.stateUrl, {})
+        const options = { headers: {} };
+        if (this.bearerToken !== '') {
+            options.headers.Authorization = `Bearer ${this.bearerToken}`
+        }
+        return fetch(this.stateUrl, options)
             .then(res => res.json())
             .then((json => { return JSON.parse(json.state); }))
             .catch((err) => { console.log('Err: ', err.message); });
@@ -14,4 +18,4 @@ class Remote {
 
 }
 
-module.exports = Remote;
+module.exports = Remote
