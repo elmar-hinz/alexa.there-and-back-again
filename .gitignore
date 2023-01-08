@@ -1,5 +1,6 @@
 ask-resources.json
 .ask
 .vscode
+.env
 lambda/node_modules
 testing/node_modules
