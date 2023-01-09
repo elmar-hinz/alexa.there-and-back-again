@@ -1,19 +1,14 @@
-const fetch = require('node-fetch');
-const MessageQueue = require('./MessageQueue');
-
 class Dialogue {
 
     remote;
-    messageQueue = new MessageQueue();
 
+    // returns an empty promise, just promising to finish eventually
     load() {
-        return this.remote.loadMessages().then((messages) => {
-            for (const message of messages) {
-                this.messageQueue.add(message);
-            }
-            return this.messageQueue;
+        return this.remote.loadState().then((message) => {
+            return message.text;
         });
     }
+
 }
 
 module.exports = Dialogue;

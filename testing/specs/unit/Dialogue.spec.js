@@ -6,10 +6,9 @@ const chaiAsPromised = require('chai-as-promised');
 chai.should();
 chai.use(chaiAsPromised);
 
-const alpha = { id: 'alpha' };
-const beta = { id: 'beta' };
-const gamma = { id: 'gamma' };
-const messages = [alpha, beta, gamma];
+const text = 'some text';
+const event = 'some event';
+const state = { text, event };
 
 describe('dialogue',  function() {
     let dialogue;
@@ -17,19 +16,15 @@ describe('dialogue',  function() {
     beforeEach(function() {
         dialogue = new Dialogue();
         dialogue.remote = {
-            loadMessages: function () {
-                return Promise.resolve(messages);
+            loadState: function () {
+                return Promise.resolve(state);
             }
         }
     });
 
     describe('the load functions', function() {
-        it('should load the message queue', function() {
-            return dialogue.load().then(queue => {
-                queue.shift().should.deep.equal(alpha);
-                queue.shift().should.deep.equal(beta);
-                queue.shift().should.deep.equal(gamma);
-            });
+        it('should load the text', function() {
+            return dialogue.load().should.eventually.equal(text);
         });
     });
 });

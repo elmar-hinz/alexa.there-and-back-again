@@ -17,23 +17,23 @@ const url = process.env.HOME_ASSISTANT_URL;
 const token = process.env.HOME_ASSISTANT_TOKEN;
 
 // config
-const pathToState = '/api/states/input_text.there_and_back_again'
-                    '/api/states/input_text.there_and_back_again'
+const pathToState = '/api/states/input_text.there_and_back_again';
 const stateUrl = `${ url }${ pathToState }`;
 
 describe('the Remote class', function () {
     let remote;
 
-    beforeEach(function() {
+    beforeEach(function () {
         remote = new Remote();
+        remote.stateUrl = stateUrl;
+        remote.bearerToken = token;
     });
 
     describe('the loadState function', function() {
-        it('should load any text from HA', function() {
-            remote.stateUrl = stateUrl;
-            remote.bearerToken = token;
-            return remote.loadState().then(res => {
-                res.text.should.not.be.empty;
+        it('should load any text and event from HA', function() {
+            return remote.loadState().then(state => {
+                state.text.should.not.be.empty;
+                state.event.should.not.be.empty;
             });
         });
     });

@@ -1,10 +1,18 @@
 const base = '..';
 
+// chai
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.should();
 chai.use(chaiAsPromised);
 
+// env
+const dotenv = require('dotenv');
+const path = require('path');
+const envPath =  path.join(__dirname, '..', '..', '.env');
+dotenv.config({path: envPath});
+
+// imports
 const VirtualAlexa = require('virtual-alexa').VirtualAlexa;
 
 describe('the launch request', function () {
@@ -17,19 +25,12 @@ describe('the launch request', function () {
             .create();
     });
 
-    it('should agree that true is true', function () {
-        true.should.be.true;
-    });
-
-    it('should agree that true is eventually true', function(){
-        return Promise.resolve(true).should.eventually.be.true;
-    })
-
     describe('the request', function () {
-        it('should respond', function() {
+        it('should speak anything, that is not empty', function() {
             return alexa.launch().should.be.fulfilled.then((payload) => {
                 const ssml = payload.response.outputSpeech.ssml;
-                ssml.should.contain('Hello, you can say Hello or Help.');
+                ssml.should.not.equal('<speak></speak>');
+                ssml.should.contain('<speak>');
             });
         });
     });

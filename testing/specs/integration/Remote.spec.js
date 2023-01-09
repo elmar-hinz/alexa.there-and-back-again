@@ -12,9 +12,10 @@ const url = 'https://example.org';
 const token = '123';
 const pathToState = '/api/states/input_text.there_and_back_again'
 const stateUrl = `${ url }${ pathToState }`;
-const text = 'hello world';
-const message = { text: text };
-const stringified = JSON.stringify(message);
+const text = 'some text';
+const event = 'some event';
+const state = { text, event };
+const stringified = JSON.stringify(state);
 const json = { state: stringified };
 
 describe('the Remote class', function () {
@@ -37,17 +38,21 @@ describe('the Remote class', function () {
     })
 
     describe('the loadState function', function() {
-        it('should load the message', function() {
+        it('should load the state (message)', function() {
             nock(url).get(pathToState).reply(200, json );
             remote.stateUrl = stateUrl;
-            return remote.loadState().should.eventually.deep.equal(message);
+            return remote.loadState().then(state => {
+                state.should.deep.equal(state);
+                state.text.should.equal(text);
+                state.event.should.equal(event);
+            })
         });
-        it('should load the message with token if a token is required', function() {
+        it('should load the state (message) with token if a token is required', function() {
             nock(url, { reqheaders: { 'Authorization': `Bearer ${token}` } })
                 .get(pathToState).reply(200, json);
             remote.stateUrl = stateUrl;
             remote.bearerToken = token;
-            return remote.loadState().should.eventually.deep.equal(message);
+            return remote.loadState().should.eventually.deep.equal(state);
         });
     });
 
